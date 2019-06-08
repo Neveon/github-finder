@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class Search extends Component {
   state = {
     text: ''
+  };
+
+  static propTypes = {
+    searchusers: PropTypes.func.isRequired
   };
 
   onChange = e => {
@@ -13,7 +18,8 @@ export class Search extends Component {
   // If not an arrow function, must bind(this) in render. Arrow functions are already binded to this
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state.text);
+    this.props.searchUsers(this.state.text); // Sending prop up to App.js using passed in function
+    this.setState({ text: '' });
   };
 
   render() {
