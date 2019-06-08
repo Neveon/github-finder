@@ -9,7 +9,8 @@ export class Search extends Component {
   static propTypes = {
     searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired
   };
 
   onChange = e => {
@@ -20,8 +21,12 @@ export class Search extends Component {
   // If not an arrow function, must bind(this) in render. Arrow functions are already binded to this
   onSubmit = e => {
     e.preventDefault();
-    this.props.searchUsers(this.state.text); // Sending prop up to App.js using passed in function
-    this.setState({ text: '' });
+    if (this.state.text === '') {
+      this.props.setAlert('Please enter a user', 'light');
+    } else {
+      this.props.searchUsers(this.state.text); // Sending prop up to App.js using passed in function
+      this.setState({ text: '' });
+    }
   };
 
   render() {
